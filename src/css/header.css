@@ -1,0 +1,28 @@
+.header {
+    padding: 2rem 1.5rem;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background-color: var(--black);
+}
+
+/* .header--active {
+    background-color: var(--black);
+}
+
+.header--active .header__store-name {
+    color: white;
+} */
+
+.header__store-name {
+    font-family: var(--fontFamily);
+    font-size: 1.5rem;
+    margin: 0;
+    color: white;
+}
+
+.header__icon {
+    font-family: "Font Awesome 5 Free";
+    font-weight: 600;
+    color: white;
+}
