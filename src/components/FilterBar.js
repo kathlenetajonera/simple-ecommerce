@@ -1,9 +1,9 @@
 import { useEffect, useState } from "react";
 
-const FilterBar = ({ allProducts, setProductsToRender }) => {
+const FilterBar = ({selectedCategory, setSelectedCategory }) => {
     const [categories, setCategories] = useState([]);
     const [isFilterOpen, setIsFilterOpen] = useState(false);
-    const [selectedCategory, setSelectedCategory] = useState(null);
+
     const handleToggle = () => setIsFilterOpen(!isFilterOpen);
     const handleClick = e => {
         const category = e.target.dataset.category;
@@ -11,7 +11,7 @@ const FilterBar = ({ allProducts, setProductsToRender }) => {
         setSelectedCategory(category);
     }
 
-    //sets categories
+    //sets categories list
     useEffect(() => {
         const fetchCategories = async () => {
             const response = await fetch("https://fakestoreapi.com/products/categories")
@@ -35,18 +35,6 @@ const FilterBar = ({ allProducts, setProductsToRender }) => {
 
         return () => document.removeEventListener("click", clickOutsideListener)
     })
-
-    //filter products based on category
-    useEffect(() => {
-        if (selectedCategory && selectedCategory !== "all products") {
-            const filteredProducts = [...allProducts].filter(product => product.category === selectedCategory);
-
-            setProductsToRender(filteredProducts);
-        } else {
-            setProductsToRender(allProducts)
-        }
-
-    }, [selectedCategory, allProducts, setProductsToRender])
 
     return (
         <div className="filter">

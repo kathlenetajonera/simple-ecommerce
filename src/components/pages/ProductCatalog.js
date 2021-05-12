@@ -1,8 +1,8 @@
 import { useEffect, useState } from "react";
-import Pagination from "./Pagination";
-import ProductList from "./ProductList";
-import SearchFilter from "./SearchFilter";
-import Container from "./wrapper/Container";
+import Pagination from "../Pagination";
+import ProductList from "../ProductList";
+import SearchFilter from "../SearchFilter";
+import Container from "../wrapper/Container";
 
 const ProductCatalog = () => {
     const [isLoading, setIsLoading] = useState(false);

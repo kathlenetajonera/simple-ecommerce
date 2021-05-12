@@ -7,11 +7,12 @@ const ProductList = ({ isLoading, productsToRender, currentPage, postsPerPage })
     const currentProducts = productsToRender.slice(indexOfFirstProduct, indexOfLastProduct);
 
     return (
-        <div className="product-list grid">
+        <div className="grid grid--catalog">
             { isLoading && <Loading /> }
 
             { currentProducts.map(product => (
                 <ProductCard 
+                    id={product.id}
                     name={product.title}
                     image={product.image}
                     price={product.price}

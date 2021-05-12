@@ -1,0 +1,97 @@
+.cart__main-text, .table__main-text {
+    font-family: var(--fontFamily);
+    font-weight: 700;
+    color: var(--black);
+    text-align: center;
+}
+
+.table {
+    width: 100%;
+    border-collapse: collapse;
+}
+
+.table__header {
+    display: none;
+}
+
+.table__colored-row {
+    background-color: var(--lightGray);
+}
+
+.table__main-text {
+    font-size: .7rem;
+    padding: 1rem;
+    text-align: left;
+}
+
+.table__main-text--total {
+    text-align: right;
+    font-size: .9rem;
+    color: var(--green);
+}
+
+.table__main-text--hidden {
+    color: var(--lightGray);
+}
+
+.table__main-text--hidden:first-child {
+    width: 60px;
+}
+
+.table__row:not(:last-child) {
+    border-bottom: 1px solid var(--lightGray);
+}
+
+.table__data {
+    font-family: var(--fontFamily);
+    font-weight: 400;
+    font-size: .8rem;
+    color: var(--gray);
+    padding: 1rem;
+    display: block;
+    text-align: right;
+}
+
+.table__data::before {
+    content: attr(data-label);
+    float: left;
+}
+
+.table__data--price {
+    font-weight: 600;
+    color: var(--green);
+}
+
+.table__remove-data {
+    width: 30px;
+    height: 30px;
+    border: 1px solid var(--gray);
+    border-radius: 50%;
+    display: inline-flex;
+    justify-content: center;
+    align-items: center;
+    cursor: pointer;
+}
+
+.table__img {
+    max-width: 100%;
+}
+
+@media (min-width: 768px) {
+    .table {
+        table-layout: fixed;
+    }
+
+    .table__header {
+        display: table-header-group;
+    }
+
+    .table__data {
+        display: table-cell;
+        text-align: left;
+    }
+
+    .table__data::before {
+        display: none;
+    }
+}
