@@ -1,17 +1,4 @@
-import { useState } from "react";
-
-const QuantityField = () => {
-    const [quantity, setQuantity] = useState(1);
-
-    const handleChange = e => {
-        const qty = e.target.value;
-        const maxValue = 99;
-
-        if (qty <= maxValue) {
-            setQuantity(qty);
-        } else return;
-    }
-
+const QuantityField = ({ quantity, handleChange }) => {
     return (
         <div className="quantity">
             <input 

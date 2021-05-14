@@ -8,12 +8,12 @@ const CartTable = () => {
 
     useEffect(() => {
         if (cartItems.length > 0) {
-            const productPrices = cartItems.map(item => item.price);
-            const productTotal = productPrices.reduce((accumulator, currentValue) => {
+            const subtotalPerProduct = cartItems.map(item => item.price * item.quantity);
+            const cartTotal = subtotalPerProduct.reduce((accumulator, currentValue) => {
                 return accumulator + currentValue;
             })
             
-            setTotal(productTotal);
+            setTotal(cartTotal);
         }
     }, [cartItems])
 
@@ -32,6 +32,7 @@ const CartTable = () => {
             <tbody>
                 { cartItems.map(item => (
                     <CartItem 
+                        id={item.id}
                         image={item.image}
                         name={item.name}
                         price={item.price}

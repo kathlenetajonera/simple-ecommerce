@@ -12,7 +12,8 @@ const ProductCard = ({ id, name, image, category, price }) => {
             id: id,
             name: name,
             image: image,
-            price: price
+            price: price,
+            quantity: 1
         };
 
         setCartItems([...cartItems, newItem])
