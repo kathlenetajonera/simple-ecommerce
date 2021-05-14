@@ -1,10 +1,9 @@
-import { useContext, useEffect, useState } from "react";
+import { useContext, useEffect } from "react";
 import { CartItemsContext } from "../context/CartItemsContext";
 import CartItem from "./CartItem";
 
-const CartTable = () => {
+const CartTable = ({ total, setTotal }) => {
     const { cartItems } = useContext(CartItemsContext);
-    const [total, setTotal] = useState(0);
 
     useEffect(() => {
         if (cartItems.length > 0) {
@@ -12,10 +11,10 @@ const CartTable = () => {
             const cartTotal = subtotalPerProduct.reduce((accumulator, currentValue) => {
                 return accumulator + currentValue;
             })
-            
-            setTotal(cartTotal);
+
+            setTotal(cartTotal.toFixed(2));
         }
-    }, [cartItems])
+    }, [cartItems, setTotal])
 
     return (
         <table className="table">
@@ -35,6 +34,7 @@ const CartTable = () => {
                         id={item.id}
                         image={item.image}
                         name={item.name}
+                        quantity={item.quantity}
                         price={item.price}
                         key={item.id}
                     />

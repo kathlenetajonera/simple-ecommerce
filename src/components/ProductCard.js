@@ -1,23 +1,52 @@
-import { useContext } from "react";
+import { useContext, useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import { CartItemsContext } from "../context/CartItemsContext";
 import "../css/product.css";
 
 const ProductCard = ({ id, name, image, category, price }) => {
     const { cartItems, setCartItems } = useContext(CartItemsContext);
+    const [indexToUpdate, setIndexToUpdate] = useState(null);
+    const [isAddingToCart, setIsAddingToCart] = useState(false);
     const handleAddToCart = (e) => {
         e.preventDefault();
-        
-        const newItem = {
-            id: id,
-            name: name,
-            image: image,
-            price: price,
-            quantity: 1
-        };
+        setIsAddingToCart(true);
 
-        setCartItems([...cartItems, newItem])
+        const productId = e.target.closest(".product").id;
+        const existingOrderIndex = cartItems.findIndex(item => item.id === parseInt(productId));
+
+        if (existingOrderIndex !== -1) {
+            setIndexToUpdate(existingOrderIndex);
+        } else {
+            const newItem = {
+                id: id,
+                name: name,
+                image: image,
+                price: price,
+                quantity: 1
+            };
+    
+            setTimeout(() => {
+                setCartItems([...cartItems, newItem]);
+                setIsAddingToCart(false);
+            }, 1000)
+        }
     }
+
+    useEffect(() => {
+        if (indexToUpdate !== null) {
+            const currentCartItems = [...cartItems];
+            const currentCartItem = currentCartItems[indexToUpdate];
+            const updatedCartItem = { ...currentCartItem, quantity: currentCartItem.quantity + 1 }
+
+            currentCartItems.splice(indexToUpdate, 1, updatedCartItem);
+
+            setTimeout(() => {
+                setCartItems(currentCartItems);
+                setIndexToUpdate(null);
+                setIsAddingToCart(false);
+            }, 1000)
+        }
+    }, [indexToUpdate, cartItems, setCartItems])
 
     return (
         <div className="product" id={id}>
@@ -40,10 +69,10 @@ const ProductCard = ({ id, name, image, category, price }) => {
             </p>
 
             <button 
-                className="button button--full"
+                className={`button ${isAddingToCart ? 'button--loading': 'button--full'}`}
                 onClick={handleAddToCart}
             >
-                Add to Cart
+                {`${isAddingToCart ? '' : 'Add to Cart'}`}
             </button>
         </div>
     );

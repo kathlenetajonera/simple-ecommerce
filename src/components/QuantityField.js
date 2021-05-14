@@ -1,4 +1,4 @@
-const QuantityField = ({ quantity, handleChange }) => {
+const QuantityField = ({ currentQuantity, handleChange }) => {
     return (
         <div className="quantity">
             <input 
@@ -6,7 +6,7 @@ const QuantityField = ({ quantity, handleChange }) => {
                 name="quantity"
                 min="1"
                 max="99"
-                value={quantity}
+                value={currentQuantity}
                 pattern="\d*"
                 className="quantity__input"
                 onChange={handleChange}
