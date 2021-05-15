@@ -51,26 +51,15 @@ body {
   animation: button-loading 1s ease infinite;
 }
 
-/* .quantity__selection {
-  display: inline-flex;
-  justify-content: center;
-  align-items: center;
-  width: 40px;
-  height: 40px;
-  border: 1px solid var(--gray);
-  border-right: none;
-  font-family: var(--fontFamily);
-  cursor: pointer;
+.button--loading:hover {
+  color: inherit;
+  background-color: inherit;
 }
 
-.quantity__selection:last-child {
-  border-right: 1px solid var(--gray);
+.button--check-out {
+  display: block;
+  margin: 4rem 0 0 auto;
 }
-
-.quantity__selection--number {
-  font-size: .88rem;
-  cursor: default;
-} */
 
 .quantity__input {
   font-family: var(--fontFamily);
@@ -110,6 +99,12 @@ body {
 .flex--sb-c {
   justify-content: space-between;
   align-items: center;
+}
+
+.error__text {
+  font-family: var(--fontFamily);
+  text-align: center;
+  margin-top: 5rem;
 }
 
 @media (min-width: 768px) {

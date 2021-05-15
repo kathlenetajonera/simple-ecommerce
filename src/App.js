@@ -7,7 +7,6 @@ import { CartItemsProvider } from "./context/CartItemsContext";
 
 function App() {
   return (
-    <div className="App">
       <Router>
         <CartItemsProvider>
           <Header />
@@ -27,7 +26,6 @@ function App() {
           </Switch>
         </CartItemsProvider>
       </Router>
-    </div>
   );
 }
 

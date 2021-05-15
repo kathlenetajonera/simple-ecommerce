@@ -74,7 +74,9 @@
 }
 
 .table__img {
-    max-width: 100%;
+    width: Min(150px, 100%);
+    display: block;
+    margin: 0 auto;
 }
 
 @media (min-width: 768px) {

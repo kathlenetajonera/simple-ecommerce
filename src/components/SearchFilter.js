@@ -13,7 +13,7 @@ const SearchFilter = ({ allProducts, setProductsToRender }) => {
             const filteredProducts = [...allProducts].filter(product => {
                 const productTitle = product.title.toLowerCase();
     
-                return productTitle.indexOf(keyword) !== -1;
+                return productTitle.indexOf(keyword.toLowerCase()) !== -1;
             })
             
             setProductsToRender(filteredProducts);

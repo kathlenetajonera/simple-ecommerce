@@ -1,17 +1,23 @@
-import { useState, useEffect, useContext } from "react";
+import { useState, useEffect } from "react";
 import { useParams } from "react-router-dom";
-import { CartItemsContext } from "../../context/CartItemsContext";
+import useAddToCart from "../hooks/useAddToCart";
 import Loading from "../Loading";
 import QuantityField from "../QuantityField";
 import Container from "../wrapper/Container";
 
 const ProductPage = () => {
     const { id } = useParams();
-    const { cartItems, setCartItems } = useContext(CartItemsContext);
     const [isLoading, setIsLoading] = useState(false);
+    const [error, setError] = useState(null);
     const [productDetails, setProductDetails] = useState(null);
     const [currentQuantity, setCurrentQuantity] = useState(1);
-    const [indexToUpdate, setIndexToUpdate] = useState(null);
+    const { handleAddToCart, isAddingToCart } = useAddToCart("grid--product-page", { 
+        id: productDetails && productDetails.id, 
+        name: productDetails && productDetails.title, 
+        image: productDetails && productDetails.image, 
+        price: productDetails && productDetails.price, 
+        currentQuantity
+    })
 
     const handleChange = e => {
         const qty = e.target.value;
@@ -22,61 +28,32 @@ const ProductPage = () => {
         }
     }
 
-    const handleAddToCart = e => {
-        e.preventDefault();
-
-        const productId = e.target.closest(".grid--product-page").id;
-        const existingOrderIndex = cartItems.findIndex(item => item.id === parseInt(productId));
-
-        if (existingOrderIndex !== -1) {
-            setCurrentQuantity(currentQuantity);
-            setIndexToUpdate(existingOrderIndex);
-        } else {
-            const newItem = {
-                id: productDetails.id,
-                name: productDetails.title,
-                image: productDetails.image,
-                price: productDetails.price,
-                quantity: currentQuantity
-            };
-    
-            setCartItems([...cartItems, newItem]);
-        }
-    }
-
     //fetch product details
     useEffect(() => {
         const fetchProductDetails = async () => {
             setIsLoading(true);
 
-            const response = await fetch(`https://fakestoreapi.com/products/${id}`);
-            const data = await response.json();
+            try {
+                const response = await fetch(`https://fakestoreapi.com/products/${id}`);
+                const data = await response.json();
 
-            setProductDetails(data);
+                if (data) {
+                    setProductDetails(data);
+                } else throw new Error("Could not fetch data..");
+            } catch (e) {
+                setError(e.message);
+            }
+
             setIsLoading(false);
         }
 
         fetchProductDetails();
     }, [id])
 
-    //update cart item
-    useEffect(() => {
-        if (indexToUpdate !== null) {
-            const currentCartItems = [...cartItems];
-            const currentCartItem = currentCartItems[indexToUpdate];
-            const updatedCartItem = { ...currentCartItem, quantity: currentCartItem.quantity + currentQuantity }
-
-            currentCartItems.splice(indexToUpdate, 1, updatedCartItem);
-
-            setCartItems(currentCartItems);
-            setIndexToUpdate(null);
-        }
-        
-    }, [indexToUpdate, cartItems, currentQuantity, setCartItems])
-
     return (
         <Container>
             { isLoading && <Loading /> }
+            { error && <p className="error__text">{error}</p> }
 
             { productDetails && 
             <div className="grid grid--product-page" id={productDetails.id}>
@@ -102,10 +79,10 @@ const ProductPage = () => {
                             handleChange={handleChange}
                         />
                         <button 
-                            className="button"
+                            className={`button ${isAddingToCart ? 'button--loading': ''}`}
                             onClick={handleAddToCart}
                         >
-                            Add to Cart
+                            { isAddingToCart ? '' : 'Add to Cart' }
                         </button>
                     </div>
                 </div>

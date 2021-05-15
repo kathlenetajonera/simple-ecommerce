@@ -13,6 +13,8 @@ const CartTable = ({ total, setTotal }) => {
             })
 
             setTotal(cartTotal.toFixed(2));
+        } else {
+            setTotal(0)
         }
     }, [cartItems, setTotal])
 
